@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors AI Tournament</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #2d3436;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        
+        .icon {
+            font-size: 3.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .icon:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .mode-btn {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mode-btn.secondary {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+        
+        .game-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .game-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #6c5ce7;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tournament-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .opponent-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #6c5ce7;
+        }
+        
+        .opponent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .opponent-name {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2d3436;
+            font-weight: 600;
+        }
+        
+        .win-ratio {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #6c5ce7;
+        }
+        
+        .human-game {
+            text-align: center;
+        }
+        
+        .score-display {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+        
+        .player-score, .ai-score {
+            padding: 15px 25px;
+            background: white;
+            border-radius: 15px;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+        }
+        
+        .player-score {
+            color: #00b894;
+            border-top: 4px solid #00b894;
+        }
+        
+        .ai-score {
+            color: #fd79a8;
+            border-top: 4px solid #fd79a8;
+        }
+        
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .choice-btn {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            font-size: 3.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .choice-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .choice-btn.paper {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        }
+        
+        .choice-btn.scissors {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+        
+        .result-display {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            background: white;
+            font-size: 1.3rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #a29bfe;
+            font-weight: 600;
+        }
+        
+        .history {
+            margin-top: 30px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .history-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #2d3436;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .history-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f2f6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .action-btn {
+            padding: 12px 24px;
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(108, 92, 231, 0.3);
+        }
+        
+        .action-btn:hover {
+            background: #5649c5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(108, 92, 231, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .choices {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tournament-results {
+                grid-template-columns: 1fr;
+            }
+            
+            .icon-container {
+                gap: 15px;
+            }
+            
+            .icon {
+                font-size: 2.5rem;
+                width: 60px;
+                height: 60px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rock Paper Scissors AI Tournament</h1>
+            <p class="subtitle">Test your skills against AI opponents or watch them battle it out in this strategic game of chance!</p>
+            
+            <div class="icon-container">
+                <div class="icon">✊</div>
+                <div class="icon">🖐</div>
+                <div class="icon">✌️</div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="mode-selector">
+                <button id="tournamentBtn" class="mode-btn">
+                    <i class="fas fa-robot"></i> AI Tournament Mode
+                </button>
+                <button id="humanVsAiBtn" class="mode-btn secondary">
+                    <i class="fas fa-user"></i> Human vs AI Mode
+                </button>
+            </div>
+            
+            <div id="tournamentMode" class="game-container">
+                <h2 class="game-title"><i class="fas fa-trophy"></i> AI Tournament Mode</h2>
+                <p>Your AI vs 4 Bots (1000 rounds each)</p>
+                
+                <div class="tournament-results">
+                    <div class="opponent-card">
+                        <div class="opponent-name">Quincy</div>
+                        <div class="win-ratio" id="quincyResult">-</div>
+                    </div>
+                    <div class="opponent-card">
+                        <div class="opponent-name">Abbey</div>
+                        <div class="win-ratio" id="abbeyResult">-</div>
+                    </div>
+                    <div class="opponent-card">
+                        <div class="opponent-name">Kris</div>
+                        <div class="win-ratio" id="krisResult">-</div>
+                    </div>
+                    <div class="opponent-card">
+                        <div class="opponent-name">Mrugesh</div>
+                        <div class="win-ratio" id="mrugeshResult">-</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button id="runTournamentBtn" class="action-btn">
+                        <i class="fas fa-play"></i> Run Tournament
+                    </button>
+                </div>
+            </div>
+            
+            <div id="humanVsAiMode" class="game-container">
+                <h2 class="game-title"><i class="fas fa-user"></i> Human vs AI Mode</h2>
+                <p>Choose your move: Rock (✊), Paper (🖐), or Scissors (✌️)</p>
+                
+                <div class="score-display">
+                    <div class="player-score">You: <span id="humanScore">0</span></div>
+                    <div class="ai-score">AI: <span id="aiScore">0</span></div>
+                </div>
+                
+                <div class="choices">
+                    <button class="choice-btn rock" data-choice="R">✊</button>
+                    <button class="choice-btn paper" data-choice="P">🖐</button>
+                    <button class="choice-btn scissors" data-choice="S">✌️</button>
+                </div>
+                
+                <div class="result-display" id="roundResult">
+                    Make your move to start the game!
+                </div>
+                
+                <div class="history">
+                    <div class="history-title"><i class="fas fa-history"></i> Game History</div>
+                    <div class="history-item">Game history will appear here</div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="resetGameBtn" class="action-btn">
+                        <i class="fas fa-redo"></i> Reset Game
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        const state = {
+            mode: null,
+            humanScore: 0,
+            aiScore: 0,
+            prevPlay: '',
+            opponentHistory: [],
+            lastMove: null,
+            gameHistory: []
+        };
+
+        // DOM elements
+        const tournamentBtn = document.getElementById('tournamentBtn');
+        const humanVsAiBtn = document.getElementById('humanVsAiBtn');
+        const tournamentMode = document.getElementById('tournamentMode');
+        const humanVsAiMode = document.getElementById('humanVsAiMode');
+        const runTournamentBtn = document.getElementById('runTournamentBtn');
+        const resetGameBtn = document.getElementById('resetGameBtn');
+        const humanScoreEl = document.getElementById('humanScore');
+        const aiScoreEl = document.getElementById('aiScore');
+        const roundResultEl = document.getElementById('roundResult');
+        const choiceBtns = document.querySelectorAll('.choice-btn');
+        const historyContainer = document.querySelector('.history');
+
+        // Mode selection
+        tournamentBtn.addEventListener('click', () => {
+            tournamentMode.classList.add('active');
+            humanVsAiMode.classList.remove('active');
+            state.mode = 'tournament';
+        });
+
+        humanVsAiBtn.addEventListener('click', () => {
+            humanVsAiMode.classList.add('active');
+            tournamentMode.classList.remove('active');
+            state.mode = 'humanVsAi';
+            resetGame();
+        });
+
+        // AI Player function (ported from Python)
+        function player(prev_play) {
+            if (prev_play) {
+                state.opponentHistory.push(prev_play);
+            }
+
+            // Start with "R" a few times to gather data
+            if (state.opponentHistory.length < 5) {
+                state.lastMove = "R";
+                return "R";
+            }
+
+            // Detect if opponent behaves like Kris (counters my last move)
+            if (state.lastMove) {
+                const last_my_move = state.lastMove;
+                const kris_will_play = {"R": "P", "P": "S", "S": "R"}[last_my_move];
+                const beat_map = {"R": "P", "P": "S", "S": "R"};
+                const move = beat_map[kris_will_play];
+
+                if (state.opponentHistory[state.opponentHistory.length - 1] === kris_will_play) {
+                    state.lastMove = move;
+                    return move;
+                }
+            }
+
+            // Markov chain prediction
+            const last3 = state.opponentHistory.slice(-3).join('');
+            const guesses = {"R": 0, "P": 0, "S": 0};
+
+            for (let i = 0; i < state.opponentHistory.length - 3; i++) {
+                if (state.opponentHistory.slice(i, i+3).join('') === last3) {
+                    const next_move = state.opponentHistory[i+3];
+                    guesses[next_move] += 1;
+                }
+            }
+
+            let move;
+            if (Object.values(guesses).every(v => v === 0)) {
+                // Fallback simple cycle
+                const cycle = ["R", "P", "S"];
+                move = cycle[state.opponentHistory.length % 3];
+            } else {
+                const prediction = Object.keys(guesses).reduce((a, b) => guesses[a] > guesses[b] ? a : b);
+                const counter = {"R": "P", "P": "S", "S": "R"};
+                move = counter[prediction];
+            }
+
+            state.lastMove = move;
+            return move;
+        }
+
+        // Opponent bots (ported from Python)
+        function quincy(round_count = [0]) {
+            const choices = ["R", "P", "S", "R", "P"];
+            const move = choices[round_count[0] % choices.length];
+            round_count[0] += 1;
+            return move;
+        }
+
+        function abbey(prev_play, opp_history = []) {
+            if (prev_play) {
+                opp_history.push(prev_play);
+            }
+            let guess = "P";
+            if (opp_history.length > 2) {
+                guess = opp_history[opp_history.length - 2];
+            }
+            return guess;
+        }
+
+        function kris() {
+            const choices = ["R", "R", "P", "P", "S", "S"];
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        function mrugesh(prev_play, opp_history = []) {
+            if (prev_play) {
+                opp_history.push(prev_play);
+            }
+            let guess = "R";
+            if (opp_history.length > 0) {
+                const last_ten = opp_history.slice(-10);
+                const counts = {R: 0, P: 0, S: 0};
+                last_ten.forEach(move => counts[move]++);
+                
+                if (counts.R >= counts.P && counts.R >= counts.S) guess = "R";
+                else if (counts.P >= counts.R && counts.P >= counts.S) guess = "P";
+                else guess = "S";
+            }
+            return guess;
+        }
+
+        // Play function (ported from Python)
+        function play(player1, player2, num_games = 1000) {
+            let p1_prev = "", p2_prev = "";
+            let p1_score = 0, p2_score = 0;
+
+            for (let i = 0; i < num_games; i++) {
+                const p1 = player1(p2_prev);
+                const p2 = player2(p1_prev);
+
+                if ((p1 === "R" && p2 === "S") || 
+                    (p1 === "P" && p2 === "R") || 
+                    (p1 === "S" && p2 === "P")) {
+                    p1_score += 1;
+                } else if (p1 !== p2) {
+                    p2_score += 1;
+                }
+
+                p1_prev = p1;
+                p2_prev = p2;
+            }
+
+            return (p1_score / num_games).toFixed(3);
+        }
+
+        // Tournament mode
+        runTournamentBtn.addEventListener('click', () => {
+            // Reset opponent histories
+            const quincyHistory = [];
+            const abbeyHistory = [];
+            const krisHistory = [];
+            const mrugeshHistory = [];
+            
+            // Run tournament (with simulated opponents)
+            document.getElementById('quincyResult').textContent = play(
+                (prev) => player(prev, quincyHistory),
+                () => quincy([0]),
+                1000
+            );
+            
+            document.getElementById('abbeyResult').textContent = play(
+                (prev) => player(prev, abbeyHistory),
+                (prev) => abbey(prev, []),
+                1000
+            );
+            
+            document.getElementById('krisResult').textContent = play(
+                (prev) => player(prev, krisHistory),
+                () => kris(),
+                1000
+            );
+            
+            document.getElementById('mrugeshResult').textContent = play(
+                (prev) => player(prev, mrugeshHistory),
+                (prev) => mrugesh(prev, []),
+                1000
+            );
+        });
+
+        // Human vs AI mode
+        function resetGame() {
+            state.humanScore = 0;
+            state.aiScore = 0;
+            state.prevPlay = '';
+            state.opponentHistory = [];
+            state.lastMove = null;
+            state.gameHistory = [];
+            
+            humanScoreEl.textContent = '0';
+            aiScoreEl.textContent = '0';
+            roundResultEl.textContent = 'Make your move to start the game!';
+            historyContainer.innerHTML = '<div class="history-title"><i class="fas fa-history"></i> Game History</div><div class="history-item">Game history will appear here</div>';
+        }
+
+        resetGameBtn.addEventListener('click', resetGame);
+
+        choiceBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const humanChoice = btn.dataset.choice;
+                const aiChoice = player(state.prevPlay);
+                state.prevPlay = humanChoice;
+                
+                // Determine winner
+                let resultText = '';
+                if (humanChoice === aiChoice) {
+                    resultText = "😐 It's a tie.";
+                } else if (
+                    (humanChoice === "R" && aiChoice === "S") || 
+                    (humanChoice === "P" && aiChoice === "R") || 
+                    (humanChoice === "S" && aiChoice === "P")
+                ) {
+                    resultText = "✅ You win this round!";
+                    state.humanScore++;
+                } else {
+                    resultText = "❌ AI wins this round!";
+                    state.aiScore++;
+                }
+                
+                // Update UI
+                humanScoreEl.textContent = state.humanScore;
+                aiScoreEl.textContent = state.aiScore;
+                roundResultEl.innerHTML = `You played ${getChoiceName(humanChoice)} <span style="font-size: 1.5rem;">${getChoiceEmoji(humanChoice)}</span>, AI played ${getChoiceName(aiChoice)} <span style="font-size: 1.5rem;">${getChoiceEmoji(aiChoice)}</span>. <strong>${resultText}</strong>`;
+                
+                // Add to history
+                // Clear placeholder if it exists
+                if (historyContainer.querySelector('.history-item:last-child').textContent === 'Game history will appear here') {
+                    historyContainer.innerHTML = '<div class="history-title"><i class="fas fa-history"></i> Game History</div>';
+                }
+                
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `<span>Round ${state.gameHistory.length + 1}:</span> You played <strong>${getChoiceName(humanChoice)} ${getChoiceEmoji(humanChoice)}</strong> vs AI played <strong>${getChoiceName(aiChoice)} ${getChoiceEmoji(aiChoice)}</strong> - ${resultText}`;
+                
+                historyContainer.appendChild(historyItem);
+                historyContainer.scrollTop = historyContainer.scrollHeight;
+                
+                // Add to game history
+                state.gameHistory.push({
+                    round: state.gameHistory.length + 1,
+                    human: humanChoice,
+                    ai: aiChoice,
+                    result: resultText
+                });
+            });
+        });
+
+        function getChoiceName(choice) {
+            switch(choice) {
+                case 'R': return 'Rock';
+                case 'P': return 'Paper';
+                case 'S': return 'Scissors';
+                default: return choice;
+            }
+        }
+
+        function getChoiceEmoji(choice) {
+            switch(choice) {
+                case 'R': return '✊';
+                case 'P': return '🖐';
+                case 'S': return '✌️';
+                default: return '';
+            }
+        }
+    </script>
+</body>
+</html>
