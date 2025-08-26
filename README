@@ -1,73 +1,138 @@
 # 🪨📄✂️ Rock-Paper-Scissors AI Project
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python&logoColor=white)
+![Web](https://img.shields.io/badge/Web-Ready-green?logo=html5&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=flat&logo=checkmarx)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Game](https://img.shields.io/badge/Game-Rock--Paper--Scissors-red?style=flat)
 
-This project is a **Rock-Paper-Scissors game with an adaptive AI opponent**.  
-It includes two modes:  
-1. **AI Tournament Mode** – Your bot competes against 4 predefined AI bots over 1000 rounds each.  
-2. **Human vs AI Mode** – Play interactively against the smart AI from your terminal.  
+A sophisticated Rock-Paper-Scissors implementation featuring an **adaptive AI opponent** with pattern recognition capabilities. This project includes both a Python backend and a beautiful web interface for an immersive gaming experience.
 
 ---
 
-##  Features
-- **Adaptive AI**: Uses pattern recognition (Markov chain) and special-case detection (e.g., vs Kris).  
-- **Tournament Mode**: Your AI plays 1000 rounds against Quincy, Abbey, Kris, and Mrugesh.  
-- **Human Mode**: Challenge the AI directly with your own moves.  
-- **Modular Code**: Separated into `main.py`, `RPS.py`, and `RPS_game.py` for clarity.  
-- **Beginner-Friendly**: Simple to run, well-documented, and easy to extend.  
+## ✨ Features
+
+- ** Adaptive AI**: Uses Markov chain prediction and special-case detection to learn your play style
+- ** Two Game Modes**: 
+  - Tournament Mode: Your AI battles 4 unique opponent bots over 1000 rounds
+  - Human vs AI Mode: Play directly against the intelligent AI
+- ** Web Interface**: Beautiful, responsive UI with hand gesture icons (✊, 🖐, ✌️)
+- ** Real-time Analytics**: Track scores, win ratios, and game history
+- ** Modern Design**: Clean white background with gradient accents and smooth animations
 
 ---
 
-##  File Structure
+## 🗂 Project Structure
+
+```
 rock-paper-scissors/
-│── main.py # Entry point with menu (Tournament or Human mode)
-│── RPS.py # Your adaptive AI bot
-│── RPS_game.py # Game engine + opponent bots
-│── README.md # Project documentation
-
-yaml
-Copy
-Edit
+│
+├── RPS.py                 # Your adaptive AI bot implementation
+├── RPS_game.py           # Game engine + opponent bots
+├── rps-game.html         # Complete web interface (standalone)
+├── README.md             # Project documentation
+│
+├── (Optional separated files):
+│   ├── style.css         # Styles for the web interface
+│   └── script.js         # JavaScript game logic
+```
 
 ---
 
-## ▶ How to Run
-Make sure you have **Python 3.8+** installed. Then:
+##  How to Run
 
+### Option 1: Web Version (Recommended)
+1. Save the provided code as `rps-game.html`
+2. Open in VS Code
+3. Install the "Live Server" extension if not already installed
+4. Right-click on the file and select "Open with Live Server"
+5. Your browser will open with the beautiful game interface
+
+### Option 2: Python Version
 ```bash
-# Run the project
+# Run the original Python version
 python main.py
-You will see a menu:
+```
 
-Enter 1 → Play Tournament Mode (AI vs 4 bots).
-Enter 2 → Play Human vs AI Mode.
+You'll be presented with a menu:
+- Enter `1` → Tournament Mode (AI vs 4 bots)
+- Enter `2` → Human vs AI Mode (Terminal-based)
 
-# Opponent Bots
-Quincy → Cycles through [R, P, S, R, P].
-Abbey → Predicts based on your 2nd-last move.
-Kris → Random but skewed distribution.
-Mrugesh → Plays your most common move in the last 10 rounds.
+---
 
-# AI Strategy (Your Bot)
-Starts with fixed moves to gather data.
-Detects if the opponent is “Kris” (counters your last move).
-Uses Markov chain prediction to model opponent patterns.
-Falls back to a cycle strategy if no data is available.
+## 🧠 AI Strategy
 
-# Future Improvements
-Add GUI/Web version with buttons for Rock/Paper/Scissors.
-Add more opponent bots with advanced strategies.
-Track leaderboards & analytics (win %, longest streaks, etc.).
-Multiplayer mode (human vs human online).
+Your adaptive AI uses a multi-layered approach:
 
-# Credits
-Created as a learning project to explore AI strategy design in simple games.
+1. **Data Gathering**: Starts with fixed moves to collect opponent data
+2. **Special Case Detection**: Identifies if opponent is "Kris" (counters your last move)
+3. **Markov Chain Prediction**: Models opponent patterns based on previous moves
+4. **Fallback Strategy**: Cycles through moves when no patterns are detected
 
-#Author
-[Srizoni Maity] 
-B.Tech in Data Science | 💡 Passion for AI & unique projects
-🔗 GitHub: [https://github.com/srizoni-maity]
-🔗 LinkedIn: [https://www.linkedin.com/in/srizoni-maity-012235356]
+---
+
+##  Opponent Bots
+
+The AI faces off against four unique opponents:
+
+1. **Quincy**: Cycles through a fixed pattern [R, P, S, R, P]
+2. **Abbey**: Predicts based on your second-to-last move
+3. **Kris**: Random selection with a skewed distribution
+4. **Mrugesh**: Plays your most common move from the last 10 rounds
+
+---
+
+## 🎮 Web Interface Features
+
+- **Responsive Design**: Works beautifully on desktop and mobile devices
+- **Visual Feedback**: Color-coded results with emoji reactions
+- **Game History**: Track all previous rounds with outcomes
+- **Smooth Animations**: Engaging hover effects and transitions
+- **Tournament Results**: Clear display of win ratios against each opponent
+
+---
+
+##  Technical Implementation
+
+The web version includes:
+- Pure HTML/CSS/JavaScript (no external dependencies)
+- Gradient backgrounds and modern UI elements
+- Flexbox and CSS Grid for responsive layout
+- Interactive JavaScript game logic
+- Local state management for game progress
+
+---
+
+##  Future Enhancements
+
+- [ ] Multiplayer online mode (WebSockets)
+- [ ] User authentication and leaderboards
+- [ ] Advanced AI with neural network implementation
+- [ ] Game statistics and visualization
+- [ ] Customizable AI difficulty levels
+- [ ] Tournament brackets and challenges
+
+---
+
+##  Author
+
+**Srizoni Maity**  
+B.Tech in Data Science | Passion for AI & Innovative Projects
+
+- 🔗 GitHub: [https://github.com/srizoni-maity](https://github.com/srizoni-maity)
+- 🔗 LinkedIn: [https://www.linkedin.com/in/srizoni-maity-012235356]
+
+---
+
+##  License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- Icons from Font Awesome
+- Color palette inspired by modern design trends
+- Game concept based on classic Rock-Paper-Scissors with AI enhancements
+
