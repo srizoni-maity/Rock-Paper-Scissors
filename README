@@ -1,18 +1,9 @@
 🪨📄✂️ Rock-Paper-Scissors AI Project
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://img.shields.io/badge/Python-3.8+-blue?logo=python&logoColor=white
+https://img.shields.io/badge/Web-Ready-green?logo=html5&logoColor=white
+https://img.shields.io/badge/Status-Complete-brightgreen?style=flat&logo=checkmarx
+https://img.shields.io/badge/License-MIT-yellow.svg
+https://img.shields.io/badge/Game-Rock--Paper--Scissors-red?style=flat
 A sophisticated Rock-Paper-Scissors implementation featuring an adaptive AI opponent with pattern recognition capabilities. This project includes both a Python backend with deep learning integration and a beautiful web interface for an immersive gaming experience.
 
 ✨ Features :
@@ -136,4 +127,5 @@ If you enjoy this project, please give it a star on GitHub! ⭐
 👉 Star This Repository
 
 "The perfect blend of classic gameplay and modern artificial intelligence" 🚀
+
 
