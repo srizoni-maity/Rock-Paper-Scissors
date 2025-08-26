@@ -1,0 +1,73 @@
+# 🪨📄✂️ Rock-Paper-Scissors AI Project
+
+![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=flat&logo=checkmarx)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Game](https://img.shields.io/badge/Game-Rock--Paper--Scissors-red?style=flat)
+
+This project is a **Rock-Paper-Scissors game with an adaptive AI opponent**.  
+It includes two modes:  
+1. **AI Tournament Mode** – Your bot competes against 4 predefined AI bots over 1000 rounds each.  
+2. **Human vs AI Mode** – Play interactively against the smart AI from your terminal.  
+
+---
+
+##  Features
+- **Adaptive AI**: Uses pattern recognition (Markov chain) and special-case detection (e.g., vs Kris).  
+- **Tournament Mode**: Your AI plays 1000 rounds against Quincy, Abbey, Kris, and Mrugesh.  
+- **Human Mode**: Challenge the AI directly with your own moves.  
+- **Modular Code**: Separated into `main.py`, `RPS.py`, and `RPS_game.py` for clarity.  
+- **Beginner-Friendly**: Simple to run, well-documented, and easy to extend.  
+
+---
+
+##  File Structure
+rock-paper-scissors/
+│── main.py # Entry point with menu (Tournament or Human mode)
+│── RPS.py # Your adaptive AI bot
+│── RPS_game.py # Game engine + opponent bots
+│── README.md # Project documentation
+
+yaml
+Copy
+Edit
+
+---
+
+## ▶ How to Run
+Make sure you have **Python 3.8+** installed. Then:
+
+```bash
+# Run the project
+python main.py
+You will see a menu:
+
+Enter 1 → Play Tournament Mode (AI vs 4 bots).
+Enter 2 → Play Human vs AI Mode.
+
+# Opponent Bots
+Quincy → Cycles through [R, P, S, R, P].
+Abbey → Predicts based on your 2nd-last move.
+Kris → Random but skewed distribution.
+Mrugesh → Plays your most common move in the last 10 rounds.
+
+# AI Strategy (Your Bot)
+Starts with fixed moves to gather data.
+Detects if the opponent is “Kris” (counters your last move).
+Uses Markov chain prediction to model opponent patterns.
+Falls back to a cycle strategy if no data is available.
+
+# Future Improvements
+Add GUI/Web version with buttons for Rock/Paper/Scissors.
+Add more opponent bots with advanced strategies.
+Track leaderboards & analytics (win %, longest streaks, etc.).
+Multiplayer mode (human vs human online).
+
+# Credits
+Created as a learning project to explore AI strategy design in simple games.
+
+#Author
+[Srizoni Maity] 
+B.Tech in Data Science | 💡 Passion for AI & unique projects
+🔗 GitHub: [https://github.com/srizoni-maity]
+🔗 LinkedIn: [https://www.linkedin.com/in/srizoni-maity-012235356]
